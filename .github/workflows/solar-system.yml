@@ -19,6 +19,13 @@ jobs:
           uses: actions/setup-node@v4
           with:
             node-version: 20
+        
+        - name: Cache NPM Dependencies
+          uses: actions/cache@v4
+          id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
     
         - name: Install Dependencies
           run: npm install
