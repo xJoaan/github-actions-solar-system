@@ -1,0 +1,22 @@
+name: Deploy App (Caller)
+
+on:
+  workflow_dispatch:
+    inputs:
+      app:
+        description: 'Nombre de la app'
+        required: true
+        default: solar-system
+      tag:
+        description: 'Tag de la imagen'
+        required: false
+        default: latest
+
+jobs:
+  deploy:
+    uses: ./.github/workflows/reusable-deploy.yml
+    with:
+      app: ${{ github.event.inputs.app }}
+      tag: ${{ github.event.inputs.tag }}
+    secrets:
+      REGISTRY_TOKEN: ${{ secrets.GHCR_TOKEN }}
